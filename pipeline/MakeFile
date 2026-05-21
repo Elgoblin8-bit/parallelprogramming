@@ -1,0 +1,32 @@
+# Author      : Kenner
+# Description : Image transformation lab with magick++ 
+########################################################
+
+CXX := g++
+
+CXXFLAGS = -std=c++23 -Wall -Wextra -Wpedantic -O3 $(shell pkg-config --cflags Magick++)
+# CXXFLAGS := -std=c++23 -Wall,-Werror $(shell pkg-config --cflags Magick++)
+
+LINK := $(CXX)
+
+LDFLAGS = $(shell pkg-config --libs Magick++)
+
+TARGET = TransformImage
+SRC = TransformImage.cc
+HEADERS = ThreadSafeQueue.hpp
+
+#############################################################
+
+# Build target
+all: $(TARGET)
+
+$(TARGET): $(SRC) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET) $(LDFLAGS)
+
+#############################################################
+
+.PHONY : clean
+clean :
+	@rm -f $(TARGET) a.out core
+	@rm -f *.o *.d *~
+	@echo "Cleanup complete."
